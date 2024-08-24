@@ -5,6 +5,7 @@ const Navbar = () => {
     useEffect(()=>{
         feather.replace();
     });
+    
   return (
     <nav className="navbar navbar-expand navbar-light navbar-bg">
       <a className="sidebar-toggle js-sidebar-toggle">

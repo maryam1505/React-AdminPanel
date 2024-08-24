@@ -1,6 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
+import feather from "feather-icons";
+import LineChart from "../components/LineChart";
+import PieChart from "../components/PieChart";
+import BarChart from "../components/BarChart";
+import Calendar from "../components/Calendar";
+import WorldMap from "../components/WorldMap";
 
 const Dashboard = () => {
+  useEffect(() => {
+    feather.replace();
+  }, []);
   return (
     <>
       <h1 className="h3 mb-3">
@@ -119,7 +128,7 @@ const Dashboard = () => {
             </div>
             <div className="card-body py-3">
               <div className="chart chart-sm">
-                <canvas id="chartjs-dashboard-line"></canvas>
+                <LineChart/>
               </div>
             </div>
           </div>
@@ -136,7 +145,7 @@ const Dashboard = () => {
               <div className="align-self-center w-100">
                 <div className="py-3">
                   <div className="chart chart-xs">
-                    <canvas id="chartjs-dashboard-pie"></canvas>
+                    <PieChart/>
                   </div>
                 </div>
 
@@ -166,7 +175,8 @@ const Dashboard = () => {
               <h5 className="card-title mb-0">Real-Time</h5>
             </div>
             <div className="card-body px-4">
-              <div id="world_map" style={{height: 350}}></div>
+              {/* <div id="world_map" style={{ height: 350 }}></div> */}
+              <WorldMap />
             </div>
           </div>
         </div>
@@ -178,7 +188,8 @@ const Dashboard = () => {
             <div className="card-body d-flex">
               <div className="align-self-center w-100">
                 <div className="chart">
-                  <div id="datetimepicker-dashboard"></div>
+                  <Calendar />
+                  {/* <div id="datetimepicker-dashboard"></div> */}
                 </div>
               </div>
             </div>
@@ -286,7 +297,7 @@ const Dashboard = () => {
             </div>
             <div className="card-body d-flex w-100">
               <div className="align-self-center chart chart-lg">
-                <canvas id="chartjs-dashboard-bar"></canvas>
+                <BarChart/>
               </div>
             </div>
           </div>
