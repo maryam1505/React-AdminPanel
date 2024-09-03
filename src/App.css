@@ -31,3 +31,7 @@
 .resize-none {
     resize: none;
 }
+
+.min-width-5 {
+    min-width: 5rem;
+}

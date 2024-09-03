@@ -61,7 +61,7 @@ const ManageRoles = () => {
           <thead className="table-head">
             <tr className="text-white">
               <th scope="col" className="text-white">
-                ID
+                Sr. No
               </th>
               <th scope="col" className="text-white">
                 Title
@@ -76,9 +76,9 @@ const ManageRoles = () => {
           </thead>
           <tbody className="bg-white">
             {roles.length > 0 ? (
-              roles.map((role) => (
+              roles.map((role, index) => (
                 <tr key={role.id}>
-                  <th scope="row"> {role.id} </th>
+                  <td className="fw-bolder" scope="row"> {index + 1} </td>
                   <td>{role.title}</td>
                   <td>{role.description}</td>
                   <td>

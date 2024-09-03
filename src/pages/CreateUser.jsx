@@ -23,6 +23,9 @@ const CreateUser = () => {
       country: "",
       city: "",
       address: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
     },
     validationSchema: Yup.object({
       profilePic: Yup.mixed()
@@ -49,6 +52,15 @@ const CreateUser = () => {
       country: Yup.string().required("Country is required"),
       city: Yup.string().required("City is required"),
       address: Yup.string().required("Address is required"),
+      email: Yup.string()
+        .email("Invalid email address")
+        .required("Email is required"),
+      password: Yup.string()
+        .min(8, "Password must be at least 8 characters")
+        .required("Password is required"),
+      confirmPassword: Yup.string()
+        .oneOf([Yup.ref("password"), null], "Passwords must match")
+        .required("Confirm password is required"),
     }),
     onSubmit: async (values, { setSubmitting, resetForm }) => {
       const formData = new FormData();
@@ -63,6 +75,8 @@ const CreateUser = () => {
       formData.append("country", values.country);
       formData.append("city", values.city);
       formData.append("address", values.address);
+      formData.append("email", values.email);
+      formData.append("password", values.password);
 
       try {
         const response = await axios.post(
@@ -195,7 +209,7 @@ const CreateUser = () => {
             {...formik.getFieldProps("lname")}
           />
         </div>
-        <div className="col-12">
+        <div className="col-6">
           <label
             htmlFor="guardian"
             className="form-label d-flex justify-content-between"
@@ -205,7 +219,9 @@ const CreateUser = () => {
               <span className="text-muted text-sm">(Father / Husband)</span>
             </div>
             {formik.touched.guardian && formik.errors.guardian && (
-              <span className="text-danger small">{formik.errors.guardian}</span>
+              <span className="text-danger small">
+                {formik.errors.guardian}
+              </span>
             )}
           </label>
           <input
@@ -213,11 +229,85 @@ const CreateUser = () => {
             id="guardian"
             placeholder="Guardian Name"
             className={`form-control ${
-              formik.touched.guardian && formik.errors.guardian && "border-danger"
+              formik.touched.guardian &&
+              formik.errors.guardian &&
+              "border-danger"
             }`}
             {...formik.getFieldProps("guardian")}
           />
         </div>
+        <div className="col-6">
+          <label
+            htmlFor="email"
+            className="form-label d-flex justify-content-between"
+          >
+            <div>Email</div>
+            {formik.touched.email && formik.errors.email && (
+              <span className="text-danger small">{formik.errors.email}</span>
+            )}
+          </label>
+          <input
+            type="email"
+            id="email"
+            placeholder="user@gmail.com"
+            className={`form-control ${
+              formik.touched.email && formik.errors.email && "border-danger"
+            }`}
+            {...formik.getFieldProps("email")}
+          />
+        </div>
+        
+        <div className="col-6">
+          <label
+            htmlFor="password"
+            className="form-label d-flex justify-content-between"
+          >
+            <div>Password</div>
+            {formik.touched.password && formik.errors.password && (
+              <span className="text-danger small">
+                {formik.errors.password}
+              </span>
+            )}
+          </label>
+          <input
+            type="password"
+            id="password"
+            placeholder="Enter password"
+            className={`form-control ${
+              formik.touched.password &&
+              formik.errors.password &&
+              "border-danger"
+            }`}
+            {...formik.getFieldProps("password")}
+          />
+        </div>
+
+        <div className="col-6">
+          <label
+            htmlFor="confirmPassword"
+            className="form-label d-flex justify-content-between"
+          >
+            <div>Confirm Password</div>
+            {formik.touched.confirmPassword &&
+              formik.errors.confirmPassword && (
+                <span className="text-danger small">
+                  {formik.errors.confirmPassword}
+                </span>
+              )}
+          </label>
+          <input
+            type="password"
+            id="confirmPassword"
+            placeholder="Confirm password"
+            className={`form-control ${
+              formik.touched.confirmPassword &&
+              formik.errors.confirmPassword &&
+              "border-danger"
+            }`}
+            {...formik.getFieldProps("confirmPassword")}
+          />
+        </div>
+
         <div className="col-md-6">
           <label
             htmlFor="age"
@@ -264,7 +354,9 @@ const CreateUser = () => {
           >
             Designation
             {formik.touched.designation && formik.errors.designation && (
-              <span className="text-danger small">{formik.errors.designation}</span>
+              <span className="text-danger small">
+                {formik.errors.designation}
+              </span>
             )}
           </label>
           <input
@@ -272,10 +364,12 @@ const CreateUser = () => {
             id="designation"
             placeholder="Designation"
             className={`form-control ${
-              formik.touched.designation && formik.errors.designation && "border-danger"
+              formik.touched.designation &&
+              formik.errors.designation &&
+              "border-danger"
             }`}
             {...formik.getFieldProps("designation")}
-            />
+          />
         </div>
         <div className="col-6">
           <label
@@ -284,7 +378,9 @@ const CreateUser = () => {
           >
             Department
             {formik.touched.department && formik.errors.department && (
-              <span className="text-danger small">{formik.errors.department}</span>
+              <span className="text-danger small">
+                {formik.errors.department}
+              </span>
             )}
           </label>
           <input
@@ -292,7 +388,9 @@ const CreateUser = () => {
             id="department"
             placeholder="Department"
             className={`form-control ${
-              formik.touched.department && formik.errors.department && "border-danger"
+              formik.touched.department &&
+              formik.errors.department &&
+              "border-danger"
             }`}
             {...formik.getFieldProps("department")}
           />

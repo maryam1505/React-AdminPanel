@@ -51,7 +51,8 @@ const Sidebar = () => {
             className={`sidebar-item ${
               isActive("/manage_users") ||
               isActive("/create_user") ||
-              location.pathname.startsWith("/update_user")
+              location.pathname.startsWith("/update_user") ||
+              location.pathname.startsWith("/view_user") 
                 ? "active"
                 : ""
             }`}

@@ -74,25 +74,16 @@ const ManageUsers = () => {
           <thead className="table-head">
             <tr className="text-white">
               <th scope="col" className="text-white">
-                ID
+                Sr. No.
               </th>
               <th scope="col" className="text-white">
                 Profile
               </th>
               <th scope="col" className="text-white">
-                First Name
+                Full Name
               </th>
               <th scope="col" className="text-white">
-                Last Name
-              </th>
-              <th scope="col" className="text-white">
-                Father/Husband Name
-              </th>
-              <th scope="col" className="text-white">
-                Date of birth
-              </th>
-              <th scope="col" className="text-white">
-                Age in Yrs
+                Email
               </th>
               <th scope="col" className="text-white">
                 Designation
@@ -101,13 +92,7 @@ const ManageUsers = () => {
                 Department
               </th>
               <th scope="col" className="text-white">
-                Country
-              </th>
-              <th scope="col" className="text-white">
-                City
-              </th>
-              <th scope="col" className="text-white">
-                Address
+                Status
               </th>
               <th scope="col" className="text-white">
                 Action
@@ -116,9 +101,13 @@ const ManageUsers = () => {
           </thead>
           <tbody className="bg-white">
             {users.length > 0 ? (
-              users.map((user) => (
+              users.map((user, index) => (
                 <tr key={user.id}>
-                  <th scope="row">{user.id}</th>
+                  {/* Sr. No */}
+                  <td className="fw-bolder" scope="row">
+                    {index + 1}
+                  </td>
+                  {/* Profile image */}
                   <td>
                     {" "}
                     <div className="size-3rem">
@@ -129,24 +118,37 @@ const ManageUsers = () => {
                       />
                     </div>
                   </td>
-                  <td>{user.fname}</td>
-                  <td>{user.lname}</td>
-                  <td>{user.guardian}</td>
-                  <td>{formatDate(user.dob)}</td>
-                  <td>{user.age}</td>
-                  <td>{user.designation}</td>
-                  <td>{user.department}</td>
-                  <td>{user.country}</td>
-                  <td>{user.city}</td>
-                  <td>{user.address}</td>
+                  {/* F Name */}
                   <td>
-                    <div className="d-flex gap-2">
+                    {user.fname} {user.lname}
+                  </td>
+                  {/* Email */}
+                  <td>{user.email}</td>
+                  {/* Designation */}
+                  <td>{user.designation}</td>
+                  {/* Ddepartment */}
+                  <td>{user.department}</td>
+                  {/* Status */}
+                  <td>{user.status}</td>
+                  {/* Action */}
+                  <td>
+                    <div className="d-flex gap-2 align-items-center">
+                      {/* User Profile */}
+                      <Link to={`/view_user/${user.id}`}>
+                        <i
+                          className="align-middle cursor-pointer text-dark"
+                          data-feather="eye"
+                        />
+                      </Link>
+
+                      {/* Edit User */}
                       <Link to={`/update_user/${user.id}`}>
                         <i
                           className="text-primary align-middle cursor-pointer"
                           data-feather="edit"
                         />
                       </Link>
+                      {/* Delete User */}
                       <div onClick={() => confirmDelete(user.id)}>
                         <i
                           className="text-danger align-middle cursor-pointer"

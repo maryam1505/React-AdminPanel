@@ -1,10 +1,24 @@
 import React, { useEffect } from "react";
 import feather from "feather-icons";
+import axios from "axios";
+import { useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
+  const navigate = useNavigate();
     useEffect(()=>{
         feather.replace();
     });
+
+    const HandleLogout = async () => {
+      try {
+        await axios.post("http://localhost:5001/auth/logout");
+        localStorage.clear();
+
+        navigate('/');
+      } catch (error) {
+        
+      }
+    }
     
   return (
     <nav className="navbar navbar-expand navbar-light navbar-bg">
@@ -233,7 +247,7 @@ const Navbar = () => {
                 Help Center
               </a>
               <div className="dropdown-divider"></div>
-              <a className="dropdown-item" href="#">
+              <a className="dropdown-item" onClick={HandleLogout}>
                 Log out
               </a>
             </div>

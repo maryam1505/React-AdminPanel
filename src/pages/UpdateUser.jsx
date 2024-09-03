@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { toast } from "react-toastify";
 
 const UpdateUser = () => {
   const { id } = useParams();
@@ -48,6 +49,7 @@ const UpdateUser = () => {
           country: data.country,
           city: data.city,
           address: data.address,
+          email: data.email,
         });
 
         if (data.image) {
@@ -71,11 +73,14 @@ const UpdateUser = () => {
         "Unsupported file format",
         (value) => {
           if (value && value instanceof File) {
-            return ["image/jpg","image/jpeg", "image/png", "image/gif"].includes(
-              value.type
-            );
+            return [
+              "image/jpg",
+              "image/jpeg",
+              "image/png",
+              "image/gif",
+            ].includes(value.type);
           }
-          return true; 
+          return true;
         }
       ),
       fname: Yup.string().required("First name is required"),
@@ -90,13 +95,16 @@ const UpdateUser = () => {
       country: Yup.string().required("Country is required"),
       city: Yup.string().required("City is required"),
       address: Yup.string().required("Address is required"),
+      email: Yup.string()
+        .email("Invalid email address")
+        .required("Email is required"),
     }),
     onSubmit: async (values, { setSubmitting, resetForm }) => {
       const formData = new FormData();
       if (values.profilePic instanceof File) {
         formData.append("image", values.profilePic);
       } else {
-        formData.append("existingImage", values.profilePic); 
+        formData.append("existingImage", values.profilePic);
       }
       formData.append("fname", values.fname);
       formData.append("lname", values.lname);
@@ -108,6 +116,7 @@ const UpdateUser = () => {
       formData.append("country", values.country);
       formData.append("city", values.city);
       formData.append("address", values.address);
+      formData.append("email", values.email);
 
       // for (const [key, value] of formData.entries()) {
       //   console.log(`${key}:`, value);
@@ -124,11 +133,11 @@ const UpdateUser = () => {
           }
         );
         console.log("User updated successfully:", response.data);
-        alert("User updated successfully!");
+        toast.success("User updated successfully!");
         resetForm();
       } catch (error) {
         console.error("Error updating user:", error);
-        alert("Failed to update user.");
+        toast.error("Failed to update user.");
       } finally {
         setSubmitting(false);
         navigate("/manage_users");
@@ -248,7 +257,7 @@ const UpdateUser = () => {
             {...formik.getFieldProps("lname")}
           />
         </div>
-        <div className="col-12">
+        <div className="col-6">
           <label
             htmlFor="guardian"
             className="form-label d-flex justify-content-between"
@@ -275,6 +284,27 @@ const UpdateUser = () => {
             {...formik.getFieldProps("guardian")}
           />
         </div>
+        <div className="col-6">
+          <label
+            htmlFor="email"
+            className="form-label d-flex justify-content-between"
+          >
+            <div>Email</div>
+            {formik.touched.email && formik.errors.email && (
+              <span className="text-danger small">{formik.errors.email}</span>
+            )}
+          </label>
+          <input
+            type="email"
+            id="email"
+            placeholder="user@gmail.com"
+            className={`form-control ${
+              formik.touched.email && formik.errors.email && "border-danger"
+            }`}
+            {...formik.getFieldProps("email")}
+          />
+        </div>
+
         <div className="col-md-6">
           <label
             htmlFor="age"
