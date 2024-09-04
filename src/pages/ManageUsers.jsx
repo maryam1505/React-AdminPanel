@@ -3,16 +3,16 @@ import axios from "axios";
 import Loader from "../common/Loader";
 import feather from "feather-icons";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const ManageUsers = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const formatDate = (date) => {
-    const d = new Date(date);
-    return d.toISOString().split("T")[0];
-  };
+  useEffect(() => {
+    feather.replace();
+  });
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -37,28 +37,23 @@ const ManageUsers = () => {
       if (response.status === 200) {
         setUsers((prevUsers) => prevUsers.filter((user) => user.id !== id));
       } else {
-        console.error("Failed to delete user:", response.data);
+        setError("Failed to delete user:", response.data);
       }
     } catch (error) {
-      console.error("Error deleting user:", error);
+      setError("Error deleting user:", error);
     }
   };
-  useEffect(() => {
-    feather.replace();
-  });
+
 
   const confirmDelete = (id) => {
-    console.log("Delete confirmed for user:", id);
     if (window.confirm("Are you sure you want to delete this user?")) {
       deleteUser(id);
     }
   };
 
   if (loading) return <Loader />;
-  if (error) return <div>Error: {error}</div>;
-  if (!Array.isArray(users)) {
-    return <p>No Users Available.</p>;
-  }
+  if (error) return <div>Error: {(error)}</div>;
+  
   return (
     <div className="container">
       <div className="d-flex justify-content-between align-items-center mb-4">
@@ -129,7 +124,7 @@ const ManageUsers = () => {
                   {/* Ddepartment */}
                   <td>{user.department}</td>
                   {/* Status */}
-                  <td>{user.status}</td>
+                  <td className="text-capitalize text-success">{user.status}</td>
                   {/* Action */}
                   <td>
                     <div className="d-flex gap-2 align-items-center">
@@ -161,7 +156,7 @@ const ManageUsers = () => {
               ))
             ) : (
               <tr>
-                <td colSpan="13" className="text-center text-muted">
+                <td colSpan="8" className="text-center text-muted">
                   No users found yet.
                 </td>
               </tr>

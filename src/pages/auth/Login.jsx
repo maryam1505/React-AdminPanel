@@ -4,6 +4,13 @@ import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
+// import jwt_decode from "jwt-decode";
+
+// const token = localStorage.getItem("authToken");
+// if (token) {
+//   const decodedToken = jwt_decode(token);
+//   console.log("User Roles:", decodedToken.roles);
+// }
 
 const LoginSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Email is required"),
@@ -22,7 +29,6 @@ const Login = () => {
         password: values.password,
       });
       const { token } = response.data;
-      console.log(token);
       localStorage.setItem("authToken", token);
 
       // Redirect to the dashboard
@@ -33,6 +39,7 @@ const Login = () => {
       setSubmitting(false);
     }
   };
+
   return (
     <main className="d-flex w-100">
       <div className="container d-flex flex-column">

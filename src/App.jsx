@@ -19,6 +19,10 @@ import CreateUser from "./pages/CreateUser";
 import CreateRole from "./pages/CreateRole";
 import UpdateUser from "./pages/UpdateUser";
 import ViewUser from "./pages/ViewUser";
+import ManageFiles from "./pages/ManageFiles";
+import Updatefile from "./pages/Updatefile";
+import UploadFiles from "./pages/UploadFile";
+import Approvals from "./pages/Approvals";
 
 function App() {
   return (
@@ -47,6 +51,22 @@ function App() {
                       <Route
                         path="/create_role"
                         element={<ProtectedRoute element={CreateRole} />}
+                      />
+                      <Route
+                        path="/manage_files"
+                        element={<ProtectedRoute element={ManageFiles} />}
+                      />
+                      <Route
+                        path="/upload_file"
+                        element={<ProtectedRoute element={UploadFiles} />}
+                      />
+                      <Route
+                        path="/update_file/:id"
+                        element={<ProtectedRoute element={Updatefile} />}
+                      />
+                      <Route
+                        path="/approvals"
+                        element={<ProtectedRoute element={Approvals} />}
                       />
                       <Route
                         path="/manage_users"

@@ -75,6 +75,34 @@ const Sidebar = () => {
               <span className="align-middle">Manage Roles</span>
             </Link>
           </li>
+
+          <li
+            className={`sidebar-item ${
+              isActive("/manage_files") ||
+              isActive("/upload_file") ||
+              location.pathname.startsWith("/update_file")
+                ? "active"
+                : ""
+            }`}
+          >
+            <Link className="sidebar-link" to={"/manage_files"}>
+              <i className="align-middle" data-feather="folder"></i>
+              <span className="align-middle">Manage Files</span>
+            </Link>
+          </li>
+
+          <li
+            className={`sidebar-item ${
+              isActive("/approvals")
+                ? "active"
+                : ""
+            }`}
+          >
+            <Link className="sidebar-link" to={"/approvals"}>
+              <i className="align-middle" data-feather="check-square"></i>
+              <span className="align-middle">Approvals</span>
+            </Link>
+          </li>
         </ul>
       </SimpleBar>
     </nav>
