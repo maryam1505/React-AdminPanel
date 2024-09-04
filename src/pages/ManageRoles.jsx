@@ -60,7 +60,7 @@ const ManageRoles = () => {
         <table className="table table-responsive ">
           <thead className="table-head">
             <tr className="text-white">
-              <th scope="col" className="text-white">
+              <th scope="col" className="text-white min-width-5">
                 Sr. No
               </th>
               <th scope="col" className="text-white">
