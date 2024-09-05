@@ -13,7 +13,7 @@ const UpdateUser = () => {
   const [roles, setRoles] = useState([]);
   const [userRoles, setUserRoles] = useState([]);
 
-  //   formik Validation
+  //   Formik Validation
   const formik = useFormik({
     initialValues: {
       profilePic: null,
@@ -166,7 +166,7 @@ const UpdateUser = () => {
   useEffect(() => {
     const fetchRoles = async () => {
       try {
-        const response = await axios.get("http://localhost:5001/roles");
+        const response = await axios.get("http://localhost:5001/roles/get");
         setRoles(response.data);
       } catch (error) {
         toast.error(error.message);
@@ -565,7 +565,7 @@ const UpdateUser = () => {
         </form>
       </div>
       <div
-        className={`container shadow bg-white px-5 pb-4 ${
+        className={`container shadow bg-white px-5 pb-4 h-100 ${
           activeTab === "Permissions" ? "d-block " : "d-none"
         }`}
         id="Permissions"

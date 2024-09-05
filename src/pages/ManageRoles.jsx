@@ -16,7 +16,7 @@ const ManageRoles = () => {
   useEffect(() => {
     const fetchRoles = async () => {
       try {
-        const response = await axios.get("http://localhost:5001/roles");
+        const response = await axios.get("http://localhost:5001/roles/get");
         setRoles(response.data);
         setLoading(false);
       } catch (err) {
@@ -33,7 +33,7 @@ const ManageRoles = () => {
 
   const deleteRole = async (id) => {
     try {
-      await axios.delete(`http://localhost:5001/delete_role/${id}`);
+      await axios.delete(`http://localhost:5001/roles/delete/${id}`);
       setRoles(roles.filter((role) => role.id !== id));
     } catch (error) {
       console.error("Error deleting role:", error);

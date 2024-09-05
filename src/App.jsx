@@ -21,7 +21,7 @@ import UpdateUser from "./pages/UpdateUser";
 import ViewUser from "./pages/ViewUser";
 import ManageFiles from "./pages/ManageFiles";
 import Updatefile from "./pages/Updatefile";
-import UploadFiles from "./pages/UploadFile";
+import UploadFile from "./pages/UploadFile";
 import Approvals from "./pages/Approvals";
 
 function App() {
@@ -58,7 +58,7 @@ function App() {
                       />
                       <Route
                         path="/upload_file"
-                        element={<ProtectedRoute element={UploadFiles} />}
+                        element={<ProtectedRoute element={UploadFile} />}
                       />
                       <Route
                         path="/update_file/:id"

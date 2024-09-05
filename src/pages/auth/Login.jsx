@@ -4,13 +4,7 @@ import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
-// import jwt_decode from "jwt-decode";
 
-// const token = localStorage.getItem("authToken");
-// if (token) {
-//   const decodedToken = jwt_decode(token);
-//   console.log("User Roles:", decodedToken.roles);
-// }
 
 const LoginSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Email is required"),
@@ -28,13 +22,15 @@ const Login = () => {
         email: values.email,
         password: values.password,
       });
-      const { token } = response.data;
-      localStorage.setItem("authToken", token);
 
-      // Redirect to the dashboard
+
+      const { token, message } = response.data;
+      localStorage.setItem("authToken", token);
       navigate("/");
+      toast.success(message);
     } catch (error) {
-      toast.error("Invalid Cridentials");
+      const errorMessage = error.response?.data?.error || "Invalid Credentials";
+      toast.error(errorMessage);
     } finally {
       setSubmitting(false);
     }
@@ -60,7 +56,7 @@ const Login = () => {
                         password: "",
                       }}
                       validationSchema={LoginSchema}
-                      onSubmit={handleSubmit} 
+                      onSubmit={handleSubmit}
                     >
                       {({ isSubmitting, touched, errors }) => (
                         <Form>
@@ -69,7 +65,11 @@ const Login = () => {
                             <Field
                               type="email"
                               name="email"
-                              className={`form-control form-control-lg ${touched.email && errors.email && "border-danger mb-2"}`}
+                              className={`form-control form-control-lg ${
+                                touched.email &&
+                                errors.email &&
+                                "border-danger mb-2"
+                              }`}
                               placeholder="Enter your email"
                             />
                             <ErrorMessage
@@ -83,7 +83,11 @@ const Login = () => {
                             <Field
                               type="password"
                               name="password"
-                              className={`form-control form-control-lg ${touched.password && errors.password && "border-danger mb-2"}`}
+                              className={`form-control form-control-lg ${
+                                touched.password &&
+                                errors.password &&
+                                "border-danger mb-2"
+                              }`}
                               placeholder="Enter your password"
                             />
                             <ErrorMessage

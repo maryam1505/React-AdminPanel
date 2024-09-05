@@ -2,8 +2,9 @@ import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { jwtDecode } from "jwt-decode";
 
-const UploadFiles = () => {
+const UploadFile = () => {
   const navigate = useNavigate();
   const fileInputRef = useRef(null);
   const [filePreview, setFilePreview] = useState(null);
@@ -12,17 +13,16 @@ const UploadFiles = () => {
   const [userId, setUserId] = useState(null);
 
   useEffect(() => {
-    const sessionData = async () => {
+    const token = localStorage.getItem("authToken");
+    if (token) {
       try {
-        const response = await axios.get("http://localhost:5001/user_session");
-        setUserId(response.data.id);
-      } catch (err) {
-        console.log(err.message);
+        const decodedToken = jwtDecode(token);
+        setUserId(decodedToken.id);
+      } catch (error) {
+        console.error("Error decoding token:", error);
       }
-    };
-
-    sessionData();
-  });
+    }
+  }, []);
 
   const handleClick = () => {
     fileInputRef.current.click();
@@ -59,14 +59,14 @@ const UploadFiles = () => {
     try {
       const response = await axios.post(
         "http://localhost:5001/upload_file",
-        formData ,
+        formData,
         {
           headers: {
             "Content-Type": "multipart/form-data",
           },
         }
       );
-      if (response.status === 200) {
+      if (response.status === 201) {
         toast.success("File uploaded successfully!");
 
         setFileName("");
@@ -134,4 +134,4 @@ const UploadFiles = () => {
   );
 };
 
-export default UploadFiles;
+export default UploadFile;
